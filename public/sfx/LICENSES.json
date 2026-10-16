@@ -1,0 +1,32 @@
+{
+  "click": {
+    "file": "click.mp3",
+    "source": "click-soft",
+    "from": "https://github.com/kapishdima/soundcn (Kenney, CC0)",
+    "license": "CC0"
+  },
+  "whoosh": {
+    "file": "whoosh.mp3",
+    "source": "card-slide-7",
+    "from": "https://github.com/kapishdima/soundcn (Kenney, CC0)",
+    "license": "CC0"
+  },
+  "tick": {
+    "file": "tick.mp3",
+    "source": "hover-tick",
+    "from": "https://github.com/kapishdima/soundcn (Kenney, CC0)",
+    "license": "CC0"
+  },
+  "thud": {
+    "file": "thud.mp3",
+    "source": "impact-punch-heavy-000",
+    "from": "https://github.com/kapishdima/soundcn (Kenney, CC0)",
+    "license": "CC0"
+  },
+  "pop": {
+    "file": "pop.mp3",
+    "source": "notification-pop",
+    "from": "https://github.com/kapishdima/soundcn (Kenney, CC0)",
+    "license": "CC0"
+  }
+}

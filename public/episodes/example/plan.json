@@ -1,0 +1,553 @@
+{
+  "episode": 1,
+  "date": "2026-01-01",
+  "title": "How the lip-sync works",
+  "keywords": [
+    "196",
+    "AI",
+    "code",
+    "Follow",
+    "loud",
+    "open.",
+    "loudness",
+    "speech,",
+    "flickers.",
+    "sounds.",
+    "nine",
+    "useAudioData",
+    "DEV,",
+    "move.",
+    "amarhassan.com",
+    "drift."
+  ],
+  "tailMs": 1500,
+  "sources": [
+    {
+      "title": "Rhubarb Lip Sync: 6 basic + 3 extended mouth shapes, speech recognition",
+      "url": "https://github.com/DanielSWolf/rhubarb-lip-sync"
+    },
+    {
+      "title": "Remotion useAudioData (@remotion/media-utils)",
+      "url": "https://www.remotion.dev/docs/use-audio-data"
+    }
+  ],
+  "scenes": [
+    {
+      "chapter": "HOOK",
+      "display": "My mouth changed shape 196 times in yesterday's video!",
+      "set": "stage",
+      "actor": {
+        "scale": 0.8,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "talk"
+          },
+          {
+            "atWord": "196",
+            "pose": "pointUp"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "splitflap",
+          "text": "196",
+          "label": "mouth moves",
+          "atWord": "196",
+          "x": 540,
+          "y": 430,
+          "width": 900
+        }
+      ]
+    },
+    {
+      "chapter": "HOOK",
+      "display": "No AI did that. About 40 lines of code did.",
+      "set": "coderoom",
+      "actor": {
+        "scale": 0.8,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "shrug",
+            "motion": "shake"
+          },
+          {
+            "atWord": "About",
+            "pose": "laptop",
+            "motion": "type",
+            "laptop": true
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "kinetic",
+          "text": "No AI did that.",
+          "highlight": [
+            "AI"
+          ],
+          "atMs": 0,
+          "untilWord": "About",
+          "x": 540,
+          "y": 420,
+          "width": 960
+        },
+        {
+          "kind": "code",
+          "text": "useMouthTrack()",
+          "atWord": "code",
+          "x": 300,
+          "y": 330,
+          "fromX": 540,
+          "fromY": 1100
+        },
+        {
+          "kind": "code",
+          "text": "Math.sqrt(sum / n)",
+          "atWord": "code",
+          "offsetMs": 200,
+          "x": 760,
+          "y": 430,
+          "fromX": 540,
+          "fromY": 1100
+        },
+        {
+          "kind": "code",
+          "text": "env > MOUTH_OPEN",
+          "atWord": "code",
+          "offsetMs": 400,
+          "x": 330,
+          "y": 540,
+          "fromX": 540,
+          "fromY": 1100
+        }
+      ]
+    },
+    {
+      "chapter": "HOOK",
+      "display": "Follow if you want to build one too.",
+      "set": "stage",
+      "actor": {
+        "enterFrom": "right",
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "wave",
+            "motion": "wave"
+          },
+          {
+            "atWord": "build",
+            "pose": "pointUp"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "follow",
+          "atWord": "Follow",
+          "x": 540,
+          "y": 400
+        }
+      ]
+    },
+    {
+      "chapter": "WHAT",
+      "display": "Every frame, the code measures how loud my voice is.",
+      "set": "stage",
+      "actor": {
+        "scale": 0.58,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "talk"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "waveform",
+          "atMs": 0,
+          "x": 540,
+          "y": 560,
+          "width": 960
+        }
+      ]
+    },
+    {
+      "chapter": "WHAT",
+      "display": "Loud means mouth open. Quiet means closed.",
+      "set": "stage",
+      "actor": {
+        "scale": 0.75,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "explain"
+          },
+          {
+            "atWord": "Quiet",
+            "pose": "shrug",
+            "motion": "still"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "steps",
+          "items": [
+            "Loud = mouth open",
+            "Quiet = closed"
+          ],
+          "atWord": "Loud",
+          "x": 540,
+          "y": 440,
+          "width": 900
+        }
+      ]
+    },
+    {
+      "chapter": "WHY IT MATTERS",
+      "display": "Thirty times a second, from the audio you hear, so it can't drift.",
+      "set": "desk",
+      "actor": {
+        "x": 790,
+        "scale": 0.8,
+        "facing": "left",
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "point"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "counter",
+          "value": 30,
+          "label": "checks / second",
+          "atMs": 0,
+          "x": 400,
+          "y": 560,
+          "width": 620
+        },
+        {
+          "kind": "label",
+          "text": "always in sync",
+          "tone": "light",
+          "atWord": "drift.",
+          "x": 400,
+          "y": 1080,
+          "rotate": -3
+        }
+      ]
+    },
+    {
+      "chapter": "HOW",
+      "display": "Step one: measure the loudness of every frame.",
+      "set": "blueprint",
+      "actor": {
+        "x": 820,
+        "scale": 0.72,
+        "facing": "left",
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "point"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "window",
+          "title": "src/components/mouth.ts",
+          "atWord": "measure",
+          "x": 540,
+          "y": 450,
+          "width": 960,
+          "lines": [
+            {
+              "text": "sum += samples[i] * samples[i];",
+              "kind": "code"
+            },
+            {
+              "text": "rms[f] = Math.sqrt(sum / Math.max(1, end - start));",
+              "kind": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "HOW",
+      "display": "Step two: compare it to your loud speech, not to silence.",
+      "set": "blueprint",
+      "actor": {
+        "x": 820,
+        "scale": 0.72,
+        "facing": "left",
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "point"
+          },
+          {
+            "atWord": "silence.",
+            "pose": "shrug",
+            "motion": "still"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "window",
+          "title": "top 10% of your voiced frames",
+          "atWord": "compare",
+          "x": 540,
+          "y": 450,
+          "width": 960,
+          "lines": [
+            {
+              "text": "const loud = voiced[Math.floor(voiced.length * 0.9)] || 1;",
+              "kind": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "HOW",
+      "display": "Step three: open above one level, close below a lower one, so it never flickers.",
+      "set": "chalkboard",
+      "actor": {
+        "x": 830,
+        "scale": 0.78,
+        "facing": "left",
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "point"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "window",
+          "style": "chalk",
+          "atMs": 0,
+          "x": 370,
+          "y": 560,
+          "width": 560,
+          "lines": [
+            {
+              "text": "open  > 0.55"
+            },
+            {
+              "text": "close < 0.40"
+            },
+            {
+              "text": "gap = no flicker"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "CATCH",
+      "display": "The catch: it only hears loud and quiet, not the actual sounds.",
+      "set": "library",
+      "actor": {
+        "x": 620,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "search",
+            "motion": "search",
+            "rightProp": "magnifier"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "label",
+          "text": "no phonemes",
+          "tone": "light",
+          "atWord": "sounds.",
+          "x": 380,
+          "y": 330,
+          "rotate": -3
+        }
+      ]
+    },
+    {
+      "chapter": "CATCH",
+      "display": "Tools like Rhubarb Lip Sync recognize speech and use nine mouth shapes.",
+      "set": "stage",
+      "actor": {
+        "scale": 0.8,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "headScratch",
+            "motion": "still"
+          },
+          {
+            "atWord": "nine",
+            "pose": "think"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "label",
+          "text": "Rhubarb Lip Sync",
+          "tone": "light",
+          "atWord": "Rhubarb",
+          "untilWord": "nine",
+          "x": 540,
+          "y": 420,
+          "rotate": -3
+        },
+        {
+          "kind": "splitflap",
+          "text": "9",
+          "label": "mouth shapes",
+          "atWord": "nine",
+          "x": 540,
+          "y": 430,
+          "width": 600
+        }
+      ]
+    },
+    {
+      "chapter": "TRY IT",
+      "display": "Try it: Remotion's useAudioData gives you every sample.",
+      "set": "coderoom",
+      "actor": {
+        "scale": 0.8,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "laptop",
+            "motion": "type",
+            "laptop": true
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "window",
+          "title": "@remotion/media-utils",
+          "atWord": "useAudioData",
+          "x": 540,
+          "y": 430,
+          "width": 960,
+          "lines": [
+            {
+              "text": "const audio = useAudioData(staticFile(\"voice.wav\"));",
+              "kind": "code"
+            },
+            {
+              "text": "audio.channelWaveforms[0]",
+              "kind": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "NEXT",
+      "display": "Comment the word DEV, and I'll send you the code!",
+      "set": "stage",
+      "actor": {
+        "scale": 0.8,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "pointViewer"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "kinetic",
+          "text": "Comment \"DEV\"",
+          "highlight": [
+            "DEV"
+          ],
+          "atWord": "Comment",
+          "x": 540,
+          "y": 420,
+          "width": 960,
+          "size": 140
+        }
+      ]
+    },
+    {
+      "chapter": "NEXT",
+      "display": "Tomorrow: how I made my character move.",
+      "set": "sky",
+      "setVariant": "timelapse",
+      "actor": {
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "think"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "label",
+          "text": "EP 03: the rig",
+          "atWord": "character",
+          "x": 540,
+          "y": 400,
+          "rotate": -3
+        }
+      ]
+    },
+    {
+      "chapter": "NEXT",
+      "display": "Visit my website amarhassan.com and hit the follow button for more.",
+      "set": "stage",
+      "zoom": 1.0,
+      "actor": {
+        "scale": 0.7,
+        "beats": [
+          {
+            "atMs": 0,
+            "pose": "talk"
+          },
+          {
+            "atWord": "amarhassan.com",
+            "pose": "pointUp"
+          },
+          {
+            "atWord": "follow",
+            "pose": "celebrate",
+            "motion": "celebrate"
+          }
+        ]
+      },
+      "items": [
+        {
+          "kind": "end",
+          "url": "amarhassan.com",
+          "cta": "Follow for tomorrow's tip",
+          "atWord": "Visit",
+          "x": 540,
+          "y": 500,
+          "width": 960
+        },
+        {
+          "kind": "confetti",
+          "atWord": "follow",
+          "x": 540,
+          "y": 560
+        }
+      ]
+    }
+  ]
+}

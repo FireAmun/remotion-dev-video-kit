@@ -1,0 +1,13 @@
+node_modules
+dist
+out
+.env
+.DS_Store
+# Python
+.venv*
+__pycache__
+# Generated per episode (your voice stays on your machine)
+public/episodes/*/narration.*
+public/episodes/*/episode.json
+assets/voice/*.wav
+assets/voice/*.txt

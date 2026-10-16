@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Remotion Dev Video Kit - Step-by-step guide - Amar Elshaer Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0B0C; --surface: #1A1A1D; --gold: #D4AF37; --gold-light: #E8CC6E; --gold-dark: #B8912A;
+    --text: #F2EDE0; --muted: #9A9488;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; font-size: 9.6pt; line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; overflow: hidden; padding: 18mm 17mm 24mm; position: relative; page-break-after: always; break-after: page;
+          background-image: radial-gradient(rgba(212,175,55,0.07) 1.2px, transparent 1.5px); background-size: 9mm 9mm; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  h1, h2, h3 { font-family: "Poppins", sans-serif; line-height: 1.2; }
+  h2 { font-size: 19pt; font-weight: 800; color: var(--text); margin: 0 0 3mm; }
+  h2 .num { color: var(--gold); margin-right: 3mm; }
+  h3 { font-size: 11.5pt; color: var(--gold); margin: 4.5mm 0 1.5mm; }
+  p { margin: 0 0 3mm; }
+  a { color: var(--gold-light); text-decoration: none; }
+  strong { color: var(--text); }
+  .muted { color: var(--muted); }
+  .lead { font-size: 10.5pt; color: var(--text); }
+  code { font-family: "JetBrains Mono", monospace; font-size: 9pt; color: var(--gold-light); background: rgba(212,175,55,0.08); padding: 0 1.2mm; border-radius: 1mm; }
+  pre { font-family: "JetBrains Mono", monospace; font-size: 7.9pt; line-height: 1.42; color: var(--text); background: var(--surface);
+        border: 1px solid rgba(212,175,55,0.45); border-radius: 3mm; padding: 3mm 4mm; margin: 1.5mm 0 3mm; white-space: pre-wrap; word-break: break-word; }
+  pre .c { color: var(--muted); } pre .g { color: var(--gold); }
+  .card { background: linear-gradient(140deg, rgba(26,26,29,0.95), rgba(26,26,29,0.7)); border: 1px solid rgba(212,175,55,0.5);
+          border-radius: 4mm; padding: 4mm 5mm; margin: 3mm 0; box-shadow: 0 0 8mm rgba(212,175,55,0.08); }
+  .tip { border-left: 3px solid var(--gold); padding: 2mm 0 2mm 4mm; margin: 3mm 0; background: rgba(212,175,55,0.06); border-radius: 0 2mm 2mm 0; }
+  .tip b { color: var(--gold); }
+  table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 8.9pt; }
+  th { text-align: left; color: var(--gold); font-family: "Poppins"; font-weight: 600; border-bottom: 1px solid rgba(212,175,55,0.6); padding: 1.2mm 2mm; }
+  td { border-bottom: 1px solid rgba(154,148,136,0.25); padding: 1.2mm 2mm; vertical-align: top; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  ol, ul { margin: 0 0 3mm; padding-left: 5mm; } li { margin-bottom: 1.2mm; }
+  .step { display: grid; grid-template-columns: 8mm 1fr; gap: 3mm; margin: 1.8mm 0; }
+  .step .n { width: 8mm; height: 8mm; border-radius: 50%; background: var(--gold); color: var(--bg); font-family: "Poppins"; font-weight: 800;
+             display: flex; align-items: center; justify-content: center; font-size: 10pt; }
+  .shots { display: flex; gap: 4mm; margin: 4mm 0; } .shots img { width: 100%; border-radius: 3mm; border: 1px solid rgba(212,175,55,0.5); }
+  .shots figure { margin: 0; flex: 1; } .shots figcaption { font-size: 8pt; color: var(--muted); text-align: center; margin-top: 1mm; }
+  .eyebrow { font-family: "JetBrains Mono"; font-size: 8.5pt; letter-spacing: 1.5mm; color: var(--gold); text-transform: uppercase; margin-bottom: 2mm; }
+  .footer { position: absolute; left: 17mm; right: 17mm; bottom: 9mm; display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(212,175,55,0.45); padding-top: 2.5mm; font-size: 8pt; color: var(--muted); font-family: "JetBrains Mono"; }
+  .footer b { color: var(--gold); font-weight: 600; }
+  /* cover */
+  .cover { display: flex; flex-direction: column; justify-content: space-between; padding: 26mm 20mm 24mm;
+           background: radial-gradient(ellipse at 50% 38%, rgba(212,175,55,0.16), transparent 60%), var(--bg); }
+  .pill { display: inline-block; font-family: "JetBrains Mono"; font-weight: 600; font-size: 10pt; color: var(--bg);
+          background: linear-gradient(180deg, var(--gold-light), var(--gold)); padding: 1.5mm 4mm; border-radius: 2mm; }
+  .cover h1 { font-size: 34pt; font-weight: 800; margin: 7mm 0 3mm; line-height: 1.08; }
+  .cover h1 span { color: var(--gold); }
+  .cover .sub { font-size: 13pt; color: var(--muted); max-width: 150mm; }
+  .cover .hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 6mm; }
+  .cover .hero img { width: 62mm; filter: drop-shadow(0 0 6mm rgba(212,175,55,0.35)); }
+  .deco { position: absolute; width: 22mm; height: 22mm; border-color: var(--gold); border-style: solid; opacity: 0.8; }
+  .deco.tl { left: 9mm; top: 9mm; border-width: 1.2mm 0 0 1.2mm; } .deco.tr { right: 9mm; top: 9mm; border-width: 1.2mm 1.2mm 0 0; }
+  .deco.bl { left: 9mm; bottom: 9mm; border-width: 0 0 1.2mm 1.2mm; } .deco.br { right: 9mm; bottom: 9mm; border-width: 0 1.2mm 1.2mm 0; }
+  .brandbox { border: 1px solid rgba(212,175,55,0.6); border-radius: 4mm; padding: 4mm 5mm; font-family: "JetBrains Mono"; font-size: 9pt; line-height: 1.9; }
+  .brandbox b { color: var(--gold); font-weight: 600; display: inline-block; width: 26mm; }
+  .toc li { margin-bottom: 2mm; font-size: 11pt; } .toc li span { color: var(--gold); font-family: "Poppins"; font-weight: 700; margin-right: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="page cover">
+  <div class="deco tl"></div><div class="deco tr"></div><div class="deco bl"></div><div class="deco br"></div>
+  <div>
+    <span class="pill">AMAR ELSHAER DEV</span>
+    <h1>Animated dev videos,<br><span>made with code.</span></h1>
+    <p class="sub">The step-by-step guide to the kit behind my videos: a rigged cartoon of you, lip-sync, word-by-word captions and a free local clone of your own voice. Windows &amp; Mac.</p>
+  </div>
+  <div class="hero">
+    <div style="flex:1">
+      <p class="eyebrow">Inside</p>
+      <ol class="toc" style="list-style:none;padding:0">
+        <li><span>01</span>What you'll build</li>
+        <li><span>02</span>Install on Windows &amp; Mac</li>
+        <li><span>03</span>Your voice (and how to make it better)</li>
+        <li><span>04</span>Your character</li>
+        <li><span>05</span>How the lip-sync works</li>
+        <li><span>06</span>Make an episode</li>
+        <li><span>07</span>Let Claude Code do it</li>
+        <li><span>08</span>Publish &amp; troubleshoot</li>
+      </ol>
+    </div>
+    <img src="../public/character/rig/head_open.png" alt="Amar's cartoon">
+  </div>
+  <div class="brandbox">
+    <b>Website</b><a href="https://amarhassan.com">amarhassan.com</a><br>
+    <b>Instagram</b><a href="https://www.instagram.com/amar_elshaer_dev">@amar_elshaer_dev</a><br>
+    <b>TikTok</b><a href="https://www.tiktok.com/@amar_elshaer_dev">@amar_elshaer_dev</a><br>
+    <b>LinkedIn</b>Amar Hassan Elshaer<br>
+    <b>Code</b><a href="https://github.com/FireAmun/remotion-dev-video-kit">github.com/FireAmun/remotion-dev-video-kit</a>
+  </div>
+</section>
+
+<!-- ============ 01 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 01</p>
+  <h2><span class="num">01</span>What you'll build</h2>
+  <p class="lead">You write a short script. The kit turns it into a 30-60 second vertical video where a cartoon of you acts out every sentence, in your own (cloned) voice, with captions and sound effects. No camera, no editing app.</p>
+  <div class="shots">
+    <figure><img src="img/hook.jpg"><figcaption>Split-flap hook</figcaption></figure>
+    <figure><img src="img/waveform.jpg"><figcaption>Live lip-sync</figcaption></figure>
+    <figure><img src="img/blueprint.jpg"><figcaption>Blueprint code scene</figcaption></figure>
+    <figure><img src="img/end.jpg"><figcaption>Art-deco end card</figcaption></figure>
+  </div>
+  <h3>The pipeline</h3>
+  <table>
+    <tr><th>Step</th><th>Tool</th><th>Output</th></tr>
+    <tr><td>1. Script</td><td>You (or Claude Code)</td><td><code>narration.txt</code>, one paragraph per scene</td></tr>
+    <tr><td>2. Voice</td><td>Qwen3-TTS 1.7B, local, Apache 2.0</td><td><code>narration.wav</code> at -16 LUFS</td></tr>
+    <tr><td>3. Word timings</td><td>faster-whisper (CPU)</td><td><code>narration.json</code></td></tr>
+    <tr><td>4. Scene plan</td><td><code>plan.json</code> → <code>build_episode.py</code></td><td><code>episode.json</code> (validated)</td></tr>
+    <tr><td>5. Video</td><td>Remotion (React)</td><td>1080×1920, 30 fps MP4</td></tr>
+  </table>
+  <div class="tip"><b>Cost:</b> zero. Everything runs on your machine with free, open models. My setup: a Windows laptop with an RTX 3060 (6 GB). Rendering a 55 s video takes a few minutes.</div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 02</p>
+  <h2><span class="num">02</span>Install on Windows &amp; Mac</h2>
+  <p>You need <strong>Node.js 18+</strong> (for Remotion), <strong>Python 3.11</strong> (for the voice) and <strong>Git</strong>. A GPU makes the voice fast; without one it still works, just slower.</p>
+  <div class="cols">
+    <div class="card">
+      <h3 style="margin-top:0">Windows</h3>
+<pre><span class="c"># tools (PowerShell)</span>
+winget install OpenJS.NodeJS.LTS
+winget install Python.Python.3.11
+winget install Git.Git
+
+<span class="c"># the kit</span>
+git clone https://github.com/FireAmun/remotion-dev-video-kit
+cd remotion-dev-video-kit
+npm install
+
+<span class="c"># Python env (NVIDIA GPU)</span>
+py -3.11 -m venv .venv-qwen
+.venv-qwen\Scripts\python -m pip install torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+.venv-qwen\Scripts\python -m pip install -r requirements.txt</pre>
+      <p class="muted">No NVIDIA GPU? Install torch without <code>--index-url</code>; it runs on CPU.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Mac</h3>
+<pre><span class="c"># tools (Terminal, needs Homebrew: brew.sh)</span>
+brew install node python@3.11 git
+
+<span class="c"># the kit</span>
+git clone https://github.com/FireAmun/remotion-dev-video-kit
+cd remotion-dev-video-kit
+npm install
+
+<span class="c"># Python env</span>
+python3.11 -m venv .venv-qwen
+source .venv-qwen/bin/activate
+pip install torch==2.6.0 torchaudio==2.6.0
+pip install -r requirements.txt</pre>
+      <p class="muted">Apple Silicon (M1-M4) uses the Mac GPU automatically. If the voice step errors on the GPU, run it with <code>PYTORCH_ENABLE_MPS_FALLBACK=1</code>. Intel Macs run on CPU (slow). I built and tested this on Windows; the Mac path uses the same code.</p>
+    </div>
+  </div>
+  <h3>Check it works</h3>
+<pre>npx remotion studio        <span class="c"># opens the preview in your browser</span></pre>
+  <p>Open the <code>RigTest</code> composition (all 15 poses) and <code>StyleTest</code> (the style kit). On Mac, use <code>python</code> where this guide writes <code>.venv-qwen\Scripts\python</code>, after <code>source .venv-qwen/bin/activate</code>.</p>
+  <div class="tip"><b>First voice run</b> downloads the Qwen3-TTS 1.7B model (about 4.2 GB) and faster-whisper small.en (about 0.45 GB). Delete models you stop using; they live in <code>~/.cache/huggingface</code>.</div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 03</p>
+  <h2><span class="num">03</span>Your voice</h2>
+  <p class="lead">The voice is cloned "zero-shot": no training, just one short clip of you. <strong>That clip decides everything</strong>: the timbre, and also the energy and pace. A calm clip gives you a sleepy narrator.</p>
+  <h3>Record the reference</h3>
+  <div class="step"><div class="n">1</div><div>Record <strong>1-2 minutes</strong> of yourself talking the way you want the videos to sound: like the start of a reel, energetic, smiling while you speak.</div></div>
+  <div class="step"><div class="n">2</div><div>Quiet room, no echo (a room with clothes or curtains is great), no music. Phone or mic about a hand-width from your mouth.</div></div>
+  <div class="step"><div class="n">3</div><div>Cut the <strong>best 8-15 seconds</strong>: clear, fluent, no "umm", no long pauses. Save it as <code>assets/voice/reference_energy.wav</code>.</div></div>
+  <div class="step"><div class="n">4</div><div>Write exactly what you say in it, word for word (repeated words included), into <code>assets/voice/reference_energy.txt</code>.</div></div>
+  <h3>Test it</h3>
+<pre>.venv-qwen\Scripts\python scripts\tts_qwen.py public\episodes\test\narration.txt</pre>
+  <h3>How to make it sound more like you</h3>
+  <table>
+    <tr><th>Do this</th><th>Why</th></tr>
+    <tr><td><strong>Try several clips</strong> from your recording and compare by ear</td><td>When I switched to a cleaner clip, my voice-match score went from 0.76 to 0.94 with the same model.</td></tr>
+    <tr><td>Pick the <strong>most expressive</strong> stretch (most pitch movement)</td><td>The clone copies your delivery. My first pick sounded "asleep"; the most expressive 11 s fixed it.</td></tr>
+    <tr><td>Use <code>!</code> on hook lines, commas for pauses</td><td>The model reads punctuation as energy and rhythm.</td></tr>
+    <tr><td>Write words the way they're <strong>spoken</strong></td><td><code>amar hassan dot com</code>, <code>N P X create video</code>, numbers as words. Captions still show the written form.</td></tr>
+    <tr><td>One paragraph per scene, under ~250 characters</td><td>Keeps every generation short and stable.</td></tr>
+    <tr><td>Keep the seed; change it only to re-roll a bad take</td><td>Same seed = repeatable takes.</td></tr>
+    <tr><td>Leave the levelling on (automatic)</td><td>The raw voice is quiet (~-36 dB). It's levelled to -16 LUFS so it's always louder than the sound effects.</td></tr>
+  </table>
+  <div class="tip"><b>Still not you?</b> Record more (20-30 min of clean narration) and fine-tune Qwen3-TTS on it (official scripts in the Qwen3-TTS repo; on a 6 GB GPU use LoRA, or a free cloud GPU), or simply record your own narration. <b>Only ever clone your own voice</b>, and keep the clip private (it's git-ignored).</div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 04 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 04</p>
+  <h2><span class="num">04</span>Your character</h2>
+  <p class="lead">The character is a <strong>puppet</strong>: your cartoon head (two images: mouth closed and open) on a vector body with joints. That's what lets it point, type, celebrate and walk instead of being a static picture.</p>
+  <h3>1. Make the art (Canva, ChatGPT or any image tool)</h3>
+<pre><span class="g">Prompt 1 (with a photo of you attached):</span>
+Flat vector cartoon of the man in the photo, same face, [hair], [beard], [glasses],
+wearing a black hoodie with gold details. Front-facing, full body, standing,
+friendly smile, mouth CLOSED. Plain solid light grey background, clean outlines.
+
+<span class="g">Prompt 2 (attach the result of prompt 1):</span>
+Edit this exact image: keep everything identical and change ONLY the mouth
+so it is open as if mid-speech, showing upper teeth.</pre>
+  <h3>2. Cut the head</h3>
+<pre>.venv-qwen\Scripts\python scripts\make_head.py closed.png open.png ^
+    --head 385 37 637 353 --mouth 470 255 590 300 ^
+    --jaw 385,223 430,284 458,317 538,347 588,331 610,301 637,223</pre>
+  <p>Read the pixel boxes off your image (Windows Paint or Mac Preview show the cursor position). The script removes the background, blends <em>only the mouth</em> from the open image onto the closed one (image tools redraw everything, so this stops the face from jittering), cuts at the jaw and cleans the edges.</p>
+  <h3>3. Fit it to the body</h3>
+  <ul>
+    <li>In <code>src/rig/Puppet.tsx</code> set <code>HEAD</code>: image size, <code>pivot</code> (bottom-centre of the chin) and the two eye boxes (used to draw real blinks).</li>
+    <li>In <code>src/theme.ts</code> → <code>character</code>, set your skin tones and outfit colours (sample them from your art).</li>
+    <li>Open <code>RigTest</code> in Studio and check every pose. Poses are just joint angles in <code>src/rig/poses.ts</code>.</li>
+  </ul>
+  <div class="shots"><figure><img src="img/poses.png" style="max-height:62mm;object-fit:contain"><figcaption>RigTest: every pose of the rig</figcaption></figure></div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 05</p>
+  <h2><span class="num">05</span>How the lip-sync works</h2>
+  <p class="lead">No AI. About 40 lines in <code>src/components/mouth.ts</code>. For every video frame it decides one thing: <strong>mouth open or closed</strong>.</p>
+  <div class="step"><div class="n">1</div><div><strong>Measure</strong> the loudness (RMS) of the audio in each frame: 30 checks a second, from the same audio you hear, so it can't drift out of sync.</div></div>
+  <div class="step"><div class="n">2</div><div><strong>Compare</strong> it to your loud speech (the top 10% of voiced frames), not to silence, so quiet and loud takes behave the same.</div></div>
+  <div class="step"><div class="n">3</div><div><strong>Two thresholds</strong>: open above 0.55, close below 0.40. The gap (hysteresis) stops the mouth from flickering.</div></div>
+  <div class="step"><div class="n">4</div><div>Every mouth state lasts at least <strong>2 frames</strong>.</div></div>
+<pre><span class="c">// per-frame loudness</span>
+for (let f = 0; f &lt; frames; f++) {
+  let sum = 0;
+  for (let i = start; i &lt; end; i++) sum += samples[i] * samples[i];
+  rms[f] = Math.sqrt(sum / Math.max(1, end - start));
+}
+<span class="c">// reference = loud speech, not silence</span>
+const voiced = rms.filter((r) =&gt; r &gt; peak * 0.02).sort((a, b) =&gt; a - b);
+const loud = voiced[Math.floor(voiced.length * 0.9)] || 1;
+<span class="c">// smooth, then open/close with hysteresis and a minimum hold</span>
+env += (level - env) * (level &gt; env ? ATTACK : RELEASE);
+const next = isOpen ? env &gt;= MOUTH_CLOSE : env &gt; MOUTH_OPEN;
+if (next !== isOpen &amp;&amp; held &gt;= MIN_HOLD) { isOpen = next; held = 0; }</pre>
+  <p>The audio comes from Remotion's <code>useAudioData()</code> (<code>@remotion/media-utils</code>). Because it's a pure function of the audio, every render is identical.</p>
+  <div class="tip"><b>The catch:</b> it hears loudness, not sounds. Tools like Rhubarb Lip Sync recognise speech and map it to nine mouth shapes (6 basic + 3 extended). For a cartoon narrator, open/closed on loudness looks natural and never goes out of sync.</div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 06</p>
+  <h2><span class="num">06</span>Make an episode</h2>
+  <p>Create a folder like <code>public/episodes/2026-01-01/</code> and work through these steps. Run one GPU job at a time (voice, then render).</p>
+  <div class="step"><div class="n">1</div><div><strong>Script</strong> → <code>narration.txt</code>: 30-60 s (≈ 75-150 words), one paragraph per scene, written as spoken. Hook in the first 2 seconds.</div></div>
+  <div class="step"><div class="n">2</div><div><strong>Voice</strong>: <code>.venv-qwen\Scripts\python scripts\tts_qwen.py public\episodes\&lt;ep&gt;\narration.txt</code></div></div>
+  <div class="step"><div class="n">3</div><div><strong>Word timings</strong>: <code>.venv-qwen\Scripts\python scripts\timestamps.py public\episodes\&lt;ep&gt;\narration.wav --hint "Remotion, React"</code> (a few tech terms only; never the whole script, or Whisper starts repeating itself).</div></div>
+  <div class="step"><div class="n">4</div><div><strong>Scenes</strong> → <code>plan.json</code>: one scene per sentence, with a set, what the character does, and items that land on spoken words (<code>atWord</code>). Copy <code>public/episodes/example/plan.json</code>.</div></div>
+  <div class="step"><div class="n">5</div><div><strong>Build</strong>: <code>.venv-qwen\Scripts\python scripts\build_episode.py public\episodes\&lt;ep&gt;</code> then <code>npm run lint</code>.</div></div>
+  <div class="step"><div class="n">6</div><div><strong>Preview</strong> in <code>npx remotion studio</code>, fix what looks off, then <strong>render</strong>: <code>npx remotion render Episode out/&lt;ep&gt;.mp4 --codec=h264 --crf=18</code> (point <code>episodeFile</code> in <code>src/Root.tsx</code> at your folder).</div></div>
+  <h3>A scene in plan.json</h3>
+<pre>{
+  "chapter": "HOOK",
+  "display": "My mouth changed shape 196 times in yesterday's video!",
+  "set": "stage",
+  "actor": { "scale": 0.8, "beats": [{ "atMs": 0, "pose": "talk" },
+                                     { "atWord": "196", "pose": "pointUp" }] },
+  "items": [{ "kind": "splitflap", "text": "196", "label": "mouth moves",
+              "atWord": "196", "x": 540, "y": 430 }]
+}</pre>
+  <table>
+    <tr><th>Building blocks</th><th></th></tr>
+    <tr><td>Sets</td><td>stage, coderoom, desk, sky (sunrise / timelapse), chalkboard, library, blueprint, plain</td></tr>
+    <tr><td>Poses</td><td>idle, talk, explain, shrug, wave, point, pointUp, pointViewer, celebrate, think, search, laptop, holdUp, thumbsUp, headScratch</td></tr>
+    <tr><td>Items</td><td>kinetic, splitflap, label, code, window (terminal / chalk), counter, stamp, steps, waveform, calendar, banner, confetti, book, icon, follow, end</td></tr>
+  </table>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 07</p>
+  <h2><span class="num">07</span>Let Claude Code do it</h2>
+  <p class="lead">The repo ships a <strong>Claude Code skill</strong> (<code>.claude/skills/daily-video/</code>) that runs the whole chapter-06 workflow from a one-sentence idea, and a <strong>CLAUDE.md</strong> template with the video rules.</p>
+  <div class="step"><div class="n">1</div><div>Fill in <code>.claude/CLAUDE.md</code>: your name, brand, handle, website, topics, posting time.</div></div>
+  <div class="step"><div class="n">2</div><div>Open the project in Claude Code and say: <em>"make a video about &lt;your idea&gt;"</em>.</div></div>
+  <div class="step"><div class="n">3</div><div>It researches (2-4 sources), then <strong>stops</strong> with a proposal: scene table, narration, facts with sources, captions. You approve or edit.</div></div>
+  <div class="step"><div class="n">4</div><div>It makes the voice, builds the scenes, checks a frame of every scene itself, then <strong>stops again</strong> with a Studio preview.</div></div>
+  <div class="step"><div class="n">5</div><div>After your OK it renders, writes the captions, and (with the Buffer connector) creates drafts for Instagram, TikTok and LinkedIn.</div></div>
+  <div class="card">
+    <h3 style="margin-top:0">Rules the skill follows</h3>
+    <ul>
+      <li>Same look every episode: only existing sets, poses and items in a daily run.</li>
+      <li>≤ 60 s, hook in 2 s, one sentence = one scene, a visual change every 1.5-3 s.</li>
+      <li>Never invents facts or code; sources are stored with each episode.</li>
+      <li>The voice is always the loudest thing; effects sit ~12 dB under it.</li>
+      <li>Never posts anything without your approval.</li>
+    </ul>
+  </div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+<!-- ============ 08 ============ -->
+<section class="page">
+  <p class="eyebrow">Chapter 08</p>
+  <h2><span class="num">08</span>Publish &amp; troubleshoot</h2>
+  <h3>Publishing</h3>
+  <ul>
+    <li><strong>Buffer</strong> (free plan): its API only accepts videos from a public link, so the skill creates drafts with captions and time already set; you attach the MP4 and press Schedule.</li>
+    <li>Turn on the <strong>AI-generated</strong> label on Instagram and TikTok when the voice is a clone. It's honest and protects the account.</li>
+    <li>Write a separate, more professional caption for LinkedIn.</li>
+    <li>"Comment <strong>DEV</strong> and I'll send you the code" works great: reply in DMs with your repo link.</li>
+  </ul>
+  <h3>Troubleshooting</h3>
+  <table>
+    <tr><th>Problem</th><th>Fix</th></tr>
+    <tr><td>Whisper transcript repeats the same sentence</td><td>Don't pass the script as a prompt; use <code>--hint</code> with a few terms.</td></tr>
+    <tr><td>Captions start early after a pause</td><td>Handled: scenes that start a narration paragraph take the exact time from the voice step.</td></tr>
+    <tr><td>Video longer than 60 s</td><td>Shorten the narration, not the speed. Check the length right after the voice step.</td></tr>
+    <tr><td>Sound effects louder than the voice</td><td>Make sure the voice went through <code>scripts/audio_level.py</code> (automatic in <code>tts_qwen.py</code>).</td></tr>
+    <tr><td>A word is mispronounced</td><td>Spell it as spoken in <code>narration.txt</code> (<code>T-T-S</code>, <code>dot com</code>); keep the written form in <code>plan.json</code>.</td></tr>
+    <tr><td>Item covers the character's face</td><td>Move the item, shrink the actor (<code>scale</code>), or put him at the side (<code>x: 790, facing: "left"</code>).</td></tr>
+    <tr><td>Studio stutters</td><td>Preview only; the final render is frame-perfect.</td></tr>
+  </table>
+  <h3>Credits &amp; licenses</h3>
+  <p class="muted">Kit code and docs: MIT. Remotion has its own license (free for individuals and small teams; companies may need one: remotion.dev/license). Qwen3-TTS: Apache 2.0. faster-whisper: MIT. Sound effects: CC0 (Kenney via soundcn). The example character is my likeness: replace it with yours before you publish.</p>
+  <div class="card" style="text-align:center">
+    <p style="font-family:Poppins;font-weight:800;font-size:15pt;margin:0 0 1mm">Built something with it? Tag me.</p>
+    <p style="margin:0"><a href="https://amarhassan.com">amarhassan.com</a> · <a href="https://www.instagram.com/amar_elshaer_dev">@amar_elshaer_dev</a> on Instagram &amp; TikTok · Amar Hassan Elshaer on LinkedIn</p>
+  </div>
+  <div class="footer"><span><b>amarhassan.com</b></span><span>IG / TikTok @amar_elshaer_dev · LinkedIn Amar Hassan Elshaer</span></div>
+</section>
+
+</body>
+</html>
